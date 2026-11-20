@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>HALCYON // 2000</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FFFDF9' stroke='%235C3A58' stroke-width='3.5'/%3E%3Cpath d='M32 18 C22 8, 12 18, 14 34 C16 48, 28 54, 32 54 C36 54, 48 48, 50 34 C52 18, 42 8, 32 18 Z' fill='%23FFCBA4' stroke='%235C3A58' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M32 21 C24 13, 16 21, 18 34 C19 44, 28 49, 32 49 C36 49, 45 44, 46 34 C48 21, 40 13, 32 21 Z' fill='%23FFB7C5' opacity='0.55'/%3E%3Cpath d='M32 18 C30 11, 35 7, 41 8 C40 13, 36 17, 32 18 Z' fill='%23A8E6CF' stroke='%235C3A58' stroke-width='2' stroke-linejoin='round'/%3E%3Cellipse cx='22' cy='25' rx='3' ry='5' transform='rotate(-20 22 25)' fill='%23FFFDF9'/%3E%3Ccircle cx='26' cy='35' r='1.8' fill='%235C3A58'/%3E%3Ccircle cx='38' cy='35' r='1.8' fill='%235C3A58'/%3E%3Cellipse cx='21' cy='38' rx='2.5' ry='1.5' fill='%23FF8FA3'/%3E%3Cellipse cx='43' cy='38' rx='2.5' ry='1.5' fill='%23FF8FA3'/%3E%3Cpath d='M30 38 Q32 41 34 38' stroke='%235C3A58' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3Cpath d='M10 14 L12 8 L14 14 L20 16 L14 18 L12 24 L10 18 L4 16 Z' fill='%23FFF3C4' stroke='%235C3A58' stroke-width='1.2'/%3E%3Ccircle cx='54' cy='16' r='2' fill='%23D4F8E8'/%3E%3Cpath d='M50 46 L52 42 L54 46 L58 48 L54 50 L52 54 L50 50 L46 48 Z' fill='%23E2D1F9' stroke='%235C3A58' stroke-width='1.2'/%3E%3C/svg%3E">
+</head>
+<body>
+  <!-- Hidden webcam feed (mirrored by JS) -->
+  <video id="webcam" autoplay playsinline muted></video>
+
+  <!-- Main game canvas (fullscreen, pixelated) -->
+  <canvas id="gameCanvas" style="touch-action: none;"></canvas>
+
+  <!-- ═══════════════ Camera Permission Dialog ═══════════════ -->
+  <div id="camera-dialog" class="overlay">
+    <div class="pixel-card dialog-card">
+      <h2 class="pixel-title">✦ VIBE CHECK ✦</h2>
+      <p class="pixel-text">Allow camera for hand tracking!</p>
+      <div id="camera-loader" class="heart-loader">♥</div>
+      <button id="camera-btn" class="pixel-btn primary">ALLOW CAMERA ✦</button>
+      <button id="skip-camera-btn" class="pixel-btn secondary">SKIP · USE MOUSE ♪</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ Start Screen ═══════════════ -->
+  <div id="start-screen" class="overlay hidden">
+    <div class="pixel-card start-card">
+      <h1 class="game-title">HALCYON<br><span class="title-year">// 2000</span></h1>
+      <div id="mode-toggle" class="mode-toggle">
+        <button class="pixel-btn mode-btn active" data-mode="zen">🌸 Chill Zen 60s</button>
+        <button class="pixel-btn mode-btn" data-mode="chaos">⛈️ Chaos Mode</button>
+      </div>
+      <!-- Duration Picker -->
+      <div id="duration-picker" class="picker-section">
+        <p class="picker-label">✦ DURATION ✦</p>
+        <div class="picker-pills">
+          <button class="pixel-btn pill-btn" data-duration="30">30s</button>
+          <button class="pixel-btn pill-btn active" data-duration="60">60s</button>
+          <button class="pixel-btn pill-btn" data-duration="90">90s</button>
+          <button class="pixel-btn pill-btn" data-duration="180">3m</button>
+          <button class="pixel-btn pill-btn" data-duration="endless">♾️ Endless</button>
+        </div>
+        <div class="custom-duration-row">
+          <input type="number" id="custom-duration" class="pixel-input" min="10" max="600" placeholder="Custom (10-600s)">
+          <button id="custom-duration-btn" class="pixel-btn">SET</button>
+        </div>
+      </div>
+
+      <!-- Personal Best Badge -->
+      <div id="personal-best-badge" class="best-badge">
+        <span class="badge-label">✦ PERSONAL BEST</span>
+        <span id="best-badge-score" class="badge-score">0</span>
+      </div>
+
+      <!-- Wand Trail Selector -->
+      <div id="wand-picker" class="picker-section">
+        <p class="picker-label">✦ WAND TRAIL ✦</p>
+        <div class="picker-pills">
+          <button class="pixel-btn pill-btn active" data-wand="rainbow">🌈 Pastel Rainbow</button>
+          <button class="pixel-btn pill-btn" data-wand="sakura">🌸 Sakura Petals</button>
+          <button class="pixel-btn pill-btn" data-wand="cyber">💚 Cyber Mint</button>
+        </div>
+      </div>
+
+      <!-- Camera Filter Selector -->
+      <div id="filter-picker" class="picker-section">
+        <p class="picker-label">✦ CAM FILTER ✦</p>
+        <div class="picker-pills">
+          <button class="pixel-btn pill-btn active" data-filter="cotton">🍬 Cotton Candy</button>
+          <button class="pixel-btn pill-btn" data-filter="gameboy">🎮 Pink GameBoy</button>
+          <button class="pixel-btn pill-btn" data-filter="natural">🌿 Natural Soft</button>
+        </div>
+      </div>
+
+      <button id="start-game-btn" class="pixel-btn primary start-action-btn">PLAY NOW ▶</button>
+      <p class="start-hint">✦ Or Slice the Cloud Peach to Start ♥ ✦</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ Game Over Screen ═══════════════ -->
+  <div id="game-over-screen" class="overlay hidden">
+    <div class="pixel-card gameover-card">
+      <h2 class="pixel-title">✦ GAME OVER ✦</h2>
+      <p id="rank-title" class="rank-title">Pastel Samurai 🌸</p>
+      <div class="stat-row">
+        <span class="stat-label">FINAL SCORE</span>
+        <span id="final-score" class="stat-value">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">BEST SCORE</span>
+        <span id="best-score" class="stat-value">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">PEAK COMBO</span>
+        <span id="peak-combo" class="stat-value">0</span>
+      </div>
+      <div class="polaroid-actions">
+        <button id="snap-polaroid-btn" class="pixel-btn primary">📸 Snap Vibe Polaroid</button>
+        <button id="download-polaroid-btn" class="pixel-btn secondary hidden">💾 Download PNG</button>
+      </div>
+      <canvas id="polaroid-canvas" class="hidden" width="400" height="520"></canvas>
+      <div id="polaroid-preview" class="polaroid-preview hidden"></div>
+      <button id="restart-game-btn" class="pixel-btn primary restart-action-btn">PLAY AGAIN ↻</button>
+      <p class="restart-hint">✦ Or Slice to Play Again ↻ ✦</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ HUD (pointer-events: none) ═══════════════ -->
+  <div id="hud" class="hidden">
+    <div id="score-pill" class="hud-pill">SCORE <span id="score-val">0</span></div>
+    <div id="best-pill" class="hud-pill">BEST <span id="best-val">0</span></div>
+    <div id="combo-pill" class="hud-pill">COMBO <span id="combo-val">0</span></div>
+    <div id="lives-pill" class="hud-pill"><span id="lives-val">♥ ♥ ♥</span></div>
+    <div id="timer-pill" class="hud-pill hidden">TIME <span id="timer-val">60</span></div>
+  </div>
+
+  <!-- ═══════════════ Fever Mode Rainbow Overlay ═══════════════ -->
+  <div id="fever-overlay" class="hidden"></div>
+
+  <!-- ═══════════════ Persistent Music Widget (top-right, always interactive) ═══════════════ -->
+  <div id="music-widget" class="collapsed">
+    <button id="music-toggle-btn" class="pixel-btn music-toggle">🎵 VIBE</button>
+    <div id="music-content" class="music-content">
+      <!-- Tabs -->
+      <div id="music-tabs" class="music-tabs">
+        <button class="tab-btn active" data-tab="local">📁 LOCAL</button>
+        <button class="tab-btn" data-tab="stream">🔗 STREAM</button>
+        <button class="tab-btn" data-tab="builtin">✦ BUILT-IN</button>
+      </div>
+      <!-- Tab: Local Audio File -->
+      <div id="tab-local" class="tab-panel">
+        <label class="pixel-btn file-label" for="audio-file-input">PICK FILE ♪</label>
+        <input type="file" id="audio-file-input" accept=".mp3,.wav,.m4a" class="hidden-input">
+        <div id="drop-zone" class="drop-zone">DROP AUDIO HERE ♪</div>
+        <div id="file-name" class="file-name"></div>
+      </div>
+      <!-- Tab: Stream URL -->
+      <div id="tab-stream" class="tab-panel hidden">
+        <input type="text" id="stream-url" class="pixel-input" placeholder="Paste Spotify/YouTube URL...">
+        <button id="stream-go-btn" class="pixel-btn">GO ▶</button>
+        <div id="stream-frame-container"></div>
+      </div>
+      <!-- Tab: Built-in Procedural Beats -->
+      <div id="tab-builtin" class="tab-panel hidden">
+        <button class="pixel-btn track-btn" data-track="synthwave">🌙 Midnight Synthwave</button>
+        <button class="pixel-btn track-btn" data-track="chill">🎵 Seoul Chill R&B</button>
+        <button class="pixel-btn track-btn" data-track="fairycore">✦ Pastel Fairycore</button>
+      </div>
+      <!-- Play/Pause · Loop · Volume -->
+      <div id="music-controls" class="music-controls">
+        <button id="play-pause-btn" class="pixel-btn ctrl-btn">▶</button>
+        <button id="loop-btn" class="pixel-btn ctrl-btn">🔁</button>
+        <input type="range" id="volume-slider" min="0" max="100" value="70" class="pixel-slider">
+        <div id="now-playing" class="now-playing"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load game as ES module (imports audio.js internally) -->
+  <script type="module" src="game.js"></script>
+</body>
+</html>
