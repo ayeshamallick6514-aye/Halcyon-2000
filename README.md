@@ -1,13 +1,16 @@
 # 🌸 HALCYON // 2000 ✨ 🍑
 ### *A Dreamy, Whimsical Y2K Pastel Pixel-Core Computer Vision Slicing Experience*
 
+[![Play Live](https://img.shields.io/badge/🎮%20Play%20Online-halcyon--2000.vercel.app-FFD1E8?style=for-the-badge&logo=vercel&logoColor=5C3A58)](https://halcyon-2000.vercel.app/)
 [![HTML5 Canvas](https://img.shields.io/badge/HTML5-Canvas%202D-FFD1E8?style=for-the-badge&logo=html5&logoColor=5C3A58)](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 [![Vanilla JS](https://img.shields.io/badge/JavaScript-ES%20Modules-FFF3C4?style=for-the-badge&logo=javascript&logoColor=5C3A58)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![MediaPipe](https://img.shields.io/badge/MediaPipe-AI%20HandLandmarker-D4F8E8?style=for-the-badge&logo=google&logoColor=5C3A58)](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker)
 [![Web Audio API](https://img.shields.io/badge/Web%20Audio-Procedural%20Synths-E2D1F9?style=for-the-badge&logo=webrtc&logoColor=5C3A58)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
-[![Vercel Ready](https://img.shields.io/badge/Vercel-Zero%20Config%20Deploy-FFFDF9?style=for-the-badge&logo=vercel&logoColor=5C3A58)](https://vercel.com)
+[![Vercel Live](https://img.shields.io/badge/Vercel-Live%20Online-FFFDF9?style=for-the-badge&logo=vercel&logoColor=5C3A58)](https://halcyon-2000.vercel.app/)
 
 ---
+
+### 🌐 **Play Live Now:** [https://halcyon-2000.vercel.app/](https://halcyon-2000.vercel.app/)
 
 > *"Drift into a 2000s daydream of soft cotton-candy skies, shimmering pixel sparkles, and lo-fi melodies. Turn your hands into magic ribbons, slice dreamy fruits mid-air, strike a peace sign for bonus love, and capture your high-score moments in a retro Polaroid photo-booth."* 🌸☁️✨
 
@@ -116,18 +119,13 @@ npx serve .
 
 ---
 
-## ☁️ Deploy to Vercel (Zero Config)
+## ☁️ Live Deployment (Vercel)
 
-Deploying HALCYON // 2000 takes under 30 seconds:
+🎮 **Play live directly in your browser:** [**https://halcyon-2000.vercel.app/**](https://halcyon-2000.vercel.app/)
 
-1. Push this repository to your GitHub:
-   ```bash
-   git push -u origin main
-   ```
-2. Go to [vercel.com](https://vercel.com) and click **"Add New Project"**.
-3. Import your `Halcyon-2000` repository.
-4. Leave all build settings at default (Framework Preset: **Other**, Root Directory: **`./`**).
-5. Click **"Deploy"** — your game is live globally with instant HTTPS for camera permissions! 🚀
+HALCYON // 2000 is deployed on Vercel with automatic CI/CD linked to this repository:
+- **Instant HTTPS:** Ensures webcam hand-tracking permissions work seamlessly on all modern browsers and mobile devices.
+- **Continuous Deployment:** Every `git push` to `main` automatically triggers an optimized global production build.
 
 ---
 
